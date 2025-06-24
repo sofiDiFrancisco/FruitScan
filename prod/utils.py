@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 from torchvision import models, transforms
 from PIL import Image
+import requests # Import the requests library
+import os # Moved os import to the top
 
 # Define the class names (must match the order used during training)
 class_names = ['freshapples', 'freshbanana', 'freshoranges', 'rottenapples', 'rottenbanana', 'rottenoranges']
@@ -40,8 +42,26 @@ def predict_image(model, image_tensor):
     predicted_class_name = class_names[predicted_class_index.item()]
     return predicted_class_name
 
-def get_fruit_info(predicted_class_name):
-    """Simulates fetching additional information about the fruit."""
+def get_fruit_info_from_api(fruit_name):
+    """Fetches general fruit information from the Fruityvice API."""
+    try:
+        # The API expects lowercase fruit names without "fresh" or "rotten"
+        clean_fruit_name = fruit_name.replace('fresh', '').replace('rotten', '')
+
+        # Handle pluralization if necessary, though the API seems to work with singular
+        if clean_fruit_name.endswith('s'):
+          clean_fruit_name = clean_fruit_name[:-1]
+
+        api_url = f"https://www.fruityvice.com/api/fruit/{clean_fruit_name}"
+        response = requests.get(api_url)
+        response.raise_for_status() # Raise an exception for bad status codes
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data from API: {e}")
+        return None
+
+def get_fruit_freshness_info(predicted_class_name):
+    """Provides freshness information based on the predicted class."""
     fruit_info_map = {
         'freshapples': "This apple appears fresh and ready to eat!",
         'freshbanana': "This banana is fresh and looks delicious!",
@@ -50,15 +70,16 @@ def get_fruit_info(predicted_class_name):
         'rottenbanana': "This banana is rotten and not suitable for eating.",
         'rottenoranges': "This orange is rotten and should be discarded."
     }
-    return fruit_info_map.get(predicted_class_name, "Could not retrieve additional information for this fruit.")
+    return fruit_info_map.get(predicted_class_name, "Could not retrieve freshness information for this fruit.")
 
 
 if __name__ == '__main__':
+    import os # Added redundant import for testing block
     # Example usage (optional, for testing utilities)
     # Assuming you have a test image named 'test_image.jpg' in the same directory
     try:
         test_image_path = 'test_image.jpg' # Replace with a real image path if testing
-        dummy_model_path = 'modelo.pth' # Replace with your model path
+        dummy_model_path = 'modelo_resnet34.pth' # Replace with your model path
 
         # Create a dummy model for testing purposes if the model file doesn't exist yet
         if not os.path.exists(dummy_model_path):
@@ -81,9 +102,21 @@ if __name__ == '__main__':
         prediction = predict_image(loaded_model, processed_image)
         print(f"Test prediction: {prediction}")
 
-        # Test the new function
-        fruit_info = get_fruit_info(prediction)
-        print(f"Fruit Info: {fruit_info}")
+        # Test the new functions
+        freshness_info = get_fruit_freshness_info(prediction)
+        print(f"Freshness Info: {freshness_info}")
+
+        # Clean the predicted name for the API call
+        clean_fruit_name_for_api = prediction.replace('fresh', '').replace('rotten', '')
+        if clean_fruit_name_for_api.endswith('s'):
+          clean_fruit_name_for_api = clean_fruit_name_for_api[:-1]
+
+        api_info = get_fruit_info_from_api(clean_fruit_name_for_api)
+        if api_info:
+            print(f"API Info: {api_info}")
+        else:
+            print("Could not fetch API info.")
+
 
     except FileNotFoundError:
         print("Dummy model file not found. Cannot run utility test.")
