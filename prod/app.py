@@ -25,7 +25,7 @@ if uploaded_file is not None:
         st.write("Classifying...")
 
         # Load the model (ensure the path is correct relative to where app.py will run)
-        model_path = "modelo_resnet34.pth" # Use the correct model filename
+        model_path = "modelo.pth" # Use the correct model filename
         num_classes = len(class_names) # Get the number of classes from utils
         model = load_model(model_path, num_classes)
 
