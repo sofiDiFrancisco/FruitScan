@@ -58,7 +58,7 @@ if __name__ == '__main__':
     # Assuming you have a test image named 'test_image.jpg' in the same directory
     try:
         test_image_path = 'test_image.jpg' # Replace with a real image path if testing
-        dummy_model_path = 'modelo.pth' # Replace with your model path
+        dummy_model_path = 'modelo_resnet34.pth' # Replace with your model path
 
         # Create a dummy model for testing purposes if the model file doesn't exist yet
         if not os.path.exists(dummy_model_path):
