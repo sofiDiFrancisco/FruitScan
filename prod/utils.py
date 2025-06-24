@@ -40,13 +40,25 @@ def predict_image(model, image_tensor):
     predicted_class_name = class_names[predicted_class_index.item()]
     return predicted_class_name
 
+def get_fruit_info(predicted_class_name):
+    """Simulates fetching additional information about the fruit."""
+    fruit_info_map = {
+        'freshapples': "This apple appears fresh and ready to eat!",
+        'freshbanana': "This banana is fresh and looks delicious!",
+        'freshoranges': "This orange is fresh and juicy!",
+        'rottenapples': "This apple appears rotten and should not be consumed.",
+        'rottenbanana': "This banana is rotten and not suitable for eating.",
+        'rottenoranges': "This orange is rotten and should be discarded."
+    }
+    return fruit_info_map.get(predicted_class_name, "Could not retrieve additional information for this fruit.")
+
+
 if __name__ == '__main__':
     # Example usage (optional, for testing utilities)
     # Assuming you have a test image named 'test_image.jpg' in the same directory
     try:
         test_image_path = 'test_image.jpg' # Replace with a real image path if testing
-        test_image = Image.open(test_image_path).convert('RGB')
-        dummy_model_path = 'modelo.pth' # Replace with your model path
+        dummy_model_path = 'modelo_resnet34.pth' # Replace with your model path
 
         # Create a dummy model for testing purposes if the model file doesn't exist yet
         if not os.path.exists(dummy_model_path):
@@ -55,12 +67,25 @@ if __name__ == '__main__':
             dummy_model.fc = nn.Linear(dummy_model.fc.in_features, len(class_names))
             torch.save(dummy_model.state_dict(), dummy_model_path)
 
+        # Load a dummy image or create one for testing
+        try:
+            test_image = Image.open(test_image_path).convert('RGB')
+        except FileNotFoundError:
+             print(f"Test image not found at {test_image_path}. Creating a dummy image for testing.")
+             # Create a dummy black image
+             test_image = Image.new('RGB', (224, 224), color = 'black')
+
+
         loaded_model = load_model(dummy_model_path, len(class_names))
         processed_image = preprocess_image(test_image)
         prediction = predict_image(loaded_model, processed_image)
         print(f"Test prediction: {prediction}")
 
+        # Test the new function
+        fruit_info = get_fruit_info(prediction)
+        print(f"Fruit Info: {fruit_info}")
+
     except FileNotFoundError:
-        print("Test image or dummy model file not found. Cannot run utility test.")
+        print("Dummy model file not found. Cannot run utility test.")
     except Exception as e:
         print(f"An error occurred during utility testing: {e}")
