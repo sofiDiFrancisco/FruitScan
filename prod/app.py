@@ -9,7 +9,7 @@ import os
 # Assuming utils.py is in the same directory as app.py
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from utils import load_model, preprocess_image, predict_image, class_names, get_fruit_freshness_info, get_fruit_info_from_api
+from utils import load_model, preprocess_image, predict_image, class_names, get_fruit_info
 
 st.title("Fruit Freshness Classifier")
 
@@ -35,35 +35,13 @@ if uploaded_file is not None:
         # Make a prediction
         predicted_class_name = predict_image(model, input_tensor)
 
-        st.success(f"Prediction: **{predicted_class_name}**")
+        st.success(f"Prediction: {predicted_class_name}")
 
-        # Get freshness information
-        freshness_info = get_fruit_freshness_info(predicted_class_name)
-        st.markdown(f"## Freshness Information")
-        st.write(freshness_info)
+        # Call the new API function to get additional fruit info
+        fruit_info = get_fruit_info(predicted_class_name)
 
-        # Get general fruit information from API
-        # Clean the predicted name for the API call
-        clean_fruit_name_for_api = predicted_class_name.replace('fresh', '').replace('rotten', '')
-        if clean_fruit_name_for_api.endswith('s'):
-          clean_fruit_name_for_api = clean_fruit_name_for_api[:-1]
-
-        api_info = get_fruit_info_from_api(clean_fruit_name_for_api)
-
-        if api_info:
-            st.markdown(f"## General Fruit Information ({api_info.get('name', 'N/A')})")
-            st.write(f"Family: {api_info.get('family', 'N/A')}")
-            st.write(f"Order: {api_info.get('order', 'N/A')}")
-            st.write(f"Genus: {api_info.get('genus', 'N/A')}")
-            st.write("Nutritional Information:")
-            nutritions = api_info.get('nutritions', {})
-            st.write(f"- Calories: {nutritions.get('calories', 'N/A')}")
-            st.write(f"- Fat: {nutritions.get('fat', 'N/A')}")
-            st.write(f"- Sugar: {nutritions.get('sugar', 'N/A')}")
-            st.write(f"- Carbohydrates: {nutritions.get('carbohydrates', 'N/A')}")
-            st.write(f"- Protein: {nutritions.get('protein', 'N/A')}")
-        else:
-            st.warning("Could not retrieve general fruit information from the API.")
+        # Display the retrieved fruit information
+        st.info(f"Additional Info: {fruit_info}")
 
 
     except FileNotFoundError:
