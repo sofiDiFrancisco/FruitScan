@@ -2,8 +2,8 @@ import torch
 import torch.nn as nn
 from torchvision import models, transforms
 from PIL import Image
-import requests # Import the requests library
-import os # Moved os import to the top
+import requests
+import os
 
 # Define the class names (must match the order used during training)
 class_names = ['freshapples', 'freshbanana', 'freshoranges', 'rottenapples', 'rottenbanana', 'rottenoranges']
@@ -74,7 +74,6 @@ def get_fruit_freshness_info(predicted_class_name):
 
 
 if __name__ == '__main__':
-    import os # Added redundant import for testing block
     # Example usage (optional, for testing utilities)
     # Assuming you have a test image named 'test_image.jpg' in the same directory
     try:
