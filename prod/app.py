@@ -69,7 +69,7 @@ if uploaded_file is not None:
     except FileNotFoundError:
         st.error(f"Error: Model file not found at {model_path}. Please ensure the model file is in the correct directory.")
     except Exception as e:
-        st.error(f"An error occurred during classification: {e}")corregir porque el modelo esta dentro de la carpeta prod
+        st.error(f"An error occurred during classification: {e}")
     except FileNotFoundError:
         st.error(f"Error: Model file not found at {model_path}. Please ensure the model file is in the correct directory.")
     except Exception as e:
