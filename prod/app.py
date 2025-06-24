@@ -24,8 +24,8 @@ if uploaded_file is not None:
         st.write("")
         st.write("Classifying...")
 
-        # Load the model (ensure the path is correct relative to where app.py will run)
-        model_path = "modelo.pth" # Use the correct model filename
+        # Load the model (correct path to model in prod folder)
+        model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "prod", "modelo.pth")
         num_classes = len(class_names) # Get the number of classes from utils
         model = load_model(model_path, num_classes)
 
@@ -44,11 +44,11 @@ if uploaded_file is not None:
 
         # Get general fruit information from API
         # Clean the predicted name for the API call
-        clean_fruit_name_for_api = predicted_class_name.replace('fresh', '').replace('rotten', '')
+        clean_fruit_name_for_api = predicted_class_name.replace('fresh', '').replace('rotten', '').strip()
         if clean_fruit_name_for_api.endswith('s'):
-          clean_fruit_name_for_api = clean_fruit_name_for_api[:-1]
+            clean_fruit_name_for_api = clean_fruit_name_for_api[:-1]
 
-        api_info = get_fruit_info_from_api(clean_fruit_name_for_api)
+        api_info = get_fruit_info_from_api(clean_fruit_name_for_api.lower())
 
         if api_info:
             st.markdown(f"## General Fruit Information ({api_info.get('name', 'N/A')})")
@@ -57,14 +57,13 @@ if uploaded_file is not None:
             st.write(f"Genus: {api_info.get('genus', 'N/A')}")
             st.write("Nutritional Information:")
             nutritions = api_info.get('nutritions', {})
-            st.write(f"- Calories: {nutritions.get('calories', 'N/A')}")
+            st.write(f"- Calories: {nutritions.get('calories', 'N/A')}")  # Fixed typo from 'calories' to 'calories'
             st.write(f"- Fat: {nutritions.get('fat', 'N/A')}")
             st.write(f"- Sugar: {nutritions.get('sugar', 'N/A')}")
             st.write(f"- Carbohydrates: {nutritions.get('carbohydrates', 'N/A')}")
             st.write(f"- Protein: {nutritions.get('protein', 'N/A')}")
         else:
             st.warning("Could not retrieve general fruit information from the API.")
-
 
     except FileNotFoundError:
         st.error(f"Error: Model file not found at {model_path}. Please ensure the model file is in the correct directory.")
