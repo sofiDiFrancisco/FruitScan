@@ -3,7 +3,7 @@
 ## Propuesta
 **Problema:**
 
-Detectar automáticamente defectos visibles en frutas como **bananas, manzanas o peras**, enfocándose en características como **manchas, podredumbre y deformaciones**, utilizando un enfoque basado en **detección de objetos**. El objetivo es facilitar la inspección de calidad en frutas de forma automática y visualmente interpretable.
+Detectar automáticamente defectos visibles en frutas como **bananas, manzanas o naranjas**, enfocándose en características como **manchas, podredumbre y deformaciones**, utilizando un enfoque basado en **detección de objetos**. El objetivo es facilitar la inspección de calidad en frutas de forma automática y visualmente interpretable.
 
 
 **Dataset propuesto:**
