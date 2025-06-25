@@ -68,19 +68,19 @@ def get_fruit_info_from_api(fruit_name):
 def get_fruit_freshness_info(predicted_class_name):
     """Provides freshness information based on the predicted class."""
     fruit_info_map = {
-        'freshapples': "This apple appears fresh and ready to eat!",
-        'freshbanana': "This banana is fresh and looks delicious!",
-        'freshoranges': "This orange is fresh and juicy!",
-        'rottenapples': "This apple appears rotten and should not be consumed.",
-        'rottenbanana': "This banana is rotten and not suitable for eating.",
-        'rottenoranges': "This orange is rotten and should be discarded."
+        'freshapples': "¡Esta manzana parece fresca y lista para comer!",
+        'freshbanana': "¡Esta banana está fresca y se ve deliciosa!",
+        'freshoranges': "¡Esta naranja está fresca y jugosa!",
+        'rottenapples': "Esta manzana parece podrida y no debería ser consumida.",
+        'rottenbanana': "Esta banana está podrida y no es adecuada para comer.",
+        'rottenoranges': "Esta naranja esta podrida y debe ser desechada."
     }
     return fruit_info_map.get(predicted_class_name, "Could not retrieve freshness information for this fruit.")
 
 # --- Streamlit App Code ---
 # Configuración de la página
 st.set_page_config(
-    page_title="FruitAI - Freshness Detector",
+    page_title="FruitScan - Freshness Detector",
     page_icon="🍎",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -143,25 +143,25 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Header de la aplicación
-st.markdown('<div class="header">🍏 FruitAI Freshness Detector</div>', unsafe_allow_html=True)
-st.markdown('<div class="subheader">Upload an image to check if your fruit is fresh or rotten</div>', unsafe_allow_html=True)
+st.markdown('<div class="header">🍏 FruiScan Detector de Frescura</div>', unsafe_allow_html=True)
+st.markdown('<div class="subheader">Sube una imagen para comprobar si tu fruta está fresca o podrida</div>', unsafe_allow_html=True)
 
 # Barra lateral con información
 with st.sidebar:
     st.image("https://cdn-icons-png.flaticon.com/512/415/415733.png", width=100)
     st.markdown("## About")
     st.info("""
-        This application uses a pre-trained ResNet34 model, fine-tuned on the Fruits Fresh and Rotten for Classification dataset,
-        to predict the freshness of apples, bananas, and oranges.
-        It also attempts to fetch general fruit information from the Fruityvice API.
-        Developed by [Your Name/Team Name].
+        Esta aplicación usa un modelo ResNet34 pre-entrenado, fine-tunning en el dataset Fruits Fresh and Rotten for Classification,
+        para predecir la frescura de manzanas, naranjas y bananas.
+        También intenta obtener información general sobre frutas de la API Fruityvice.
+        Desarrollado por el GRUPO 5.
     """)
     st.markdown("## Dataset")
     st.info("[Fruits Fresh and Rotten for Classification on Kaggle](https://www.kaggle.com/datasets/sriramr/fruits-fresh-and-rotten-for-classification)")
     st.markdown("## API")
     st.info("[Fruityvice API](https://www.fruityvice.com/)")
     st.markdown("---")
-    st.write("© 2024 FruitAI")
+    st.write("© 2025 FruitScan")
 
 
 # Main content area
@@ -198,9 +198,9 @@ if uploaded_file is not None:
 
             st.subheader("Prediction:")
             if 'fresh' in predicted_class_name:
-                st.markdown(f'<div class="result-box fresh">The fruit is: **{predicted_class_name.replace("fresh", "").capitalize()} - FRESH** ✨</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="result-box fresh">La fruta esta: **{predicted_class_name.replace("fresh", "").capitalize()} - FRESH** ✨</div>', unsafe_allow_html=True)
             elif 'rotten' in predicted_class_name:
-                 st.markdown(f'<div class="result-box rotten">The fruit is: **{predicted_class_name.replace("rotten", "").capitalize()} - ROTTEN** 🤢</div>', unsafe_allow_html=True)
+                 st.markdown(f'<div class="result-box rotten">La fruta esta: **{predicted_class_name.replace("rotten", "").capitalize()} - ROTTEN** 🤢</div>', unsafe_allow_html=True)
             else:
                  st.info(f"The fruit is: **{predicted_class_name.capitalize()}**")
 
