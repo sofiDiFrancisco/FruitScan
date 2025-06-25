@@ -1,13 +1,18 @@
-### FruitScan – Detección y segmentación de defectos en frutas con Faster R-CNN
+### FruitScan – Detección de defectos en frutas con Faster R-CNN
 
 ## Propuesta
 **Problema:**
 
-Detectar automáticamente defectos visibles en frutas como **bananas, manzanas o peras**, enfocándose en características como **manchas, podredumbre y deformaciones**, utilizando un enfoque basado en **detección de objetos y segmentación**. El objetivo es facilitar la inspección de calidad en frutas de forma automática y visualmente interpretable.
+Detectar automáticamente defectos visibles en frutas como **bananas, manzanas o peras**, enfocándose en características como **manchas, podredumbre y deformaciones**, utilizando un enfoque basado en **detección de objetos**. El objetivo es facilitar la inspección de calidad en frutas de forma automática y visualmente interpretable.
+
 
 **Dataset propuesto:**
 
 * [Fruit Quality Dataset – Kaggle](https://www.kaggle.com/datasets/sriramr/fruits-fresh-and-rotten-for-classification)
+
+**API**
+
+* [Fruityvice API](https://www.fruityvice.com/)
 
 
 **Aplicación web propuesta:**
@@ -16,7 +21,7 @@ Desarrollar una **aplicación web interactiva** donde el usuario puede:
 
 * Subir una imagen de una fruta.
 * Visualizar los **defectos detectados**, marcados con **bounding boxes**
-* Obtener una breve descripción del tipo de defecto y su localización.
+* Obtener una breve descripción de la fruta.
 
 **Objetivo final:** facilitar herramientas automáticas para inspección visual de calidad, con posibles aplicaciones en agricultura, logística y ventas minoristas.
 
@@ -38,7 +43,7 @@ El repositorio de GitHub del proyecto presenta la siguiente estructura:
 ## Uso
 1. Clonar el repositorio:
    ```bash
-   [git clone https://github.com/sofiDiFrancisco/FruitScan.git]
+   git clone https://github.com/sofiDiFrancisco/FruitScan.git
    ```
 2. Instalar dependencias:
    ```bash
@@ -50,5 +55,5 @@ El repositorio de GitHub del proyecto presenta la siguiente estructura:
    ```
 4. Link app de streamlit:
     ```bash
-   https://probandosegundaparte-dm6j6vhmhqkbcgjhnhisez.streamlit.app/
+   https://fruitscan-bpx8gwpmj2xxztvi2wyj3m.streamlit.app/
    ```
