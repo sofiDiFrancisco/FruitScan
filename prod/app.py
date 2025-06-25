@@ -229,7 +229,14 @@ if uploaded_file is not None:
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
         st.info("Please try another image or contact support if the problem persists.")
-
+def load_model(model_path, num_classes):
+    """Loads the pre-trained ResNet model."""
+    model = models.resnet34(pretrained=False)
+    num_features = model.fc.in_features
+    model.fc = nn.Linear(num_features, num_classes)
+    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
+    model.eval()
+    return model
 # Footer
 st.markdown("---")
 st.markdown("""
