@@ -27,11 +27,11 @@ El repositorio de GitHub del proyecto presenta la siguiente estructura:
 1. data/: Contendrá los datasets usados para entrenar y evaluar la red neuronal.
 2. dev/: Esta carpeta se usará para los notebooks y scripts de desarrollo experimental del modelo. Aquí se incluirán los experimentos en Jupyter notebooks y cualquier script que documente el proceso de exploración y pruebas.
 3. prod/:
-      _ app.py: Archivo principal para la aplicación web. Este script contendrá el código para crear la interfaz gráfica con Streamlit y usar la aplicación.
-      - modelo.pth: Archivo del modelo entrenado que contiene los pesos de la red neuronal en formato PyTorch.
-      _ README.md: Documento de descripción del proyecto que incluye instrucciones sobre cómo clonar el repositorio, instalar las dependencias y ejecutar la aplicación.
-      _ requirements.txt: Archivo con las dependencias necesarias para ejecutar el proyecto.
-      _ utils.py: Archivo con funciones auxiliares utilizadas por app.py, tales como preprocesamiento de datos y carga del modelo.
+      * app.py: Archivo principal para la aplicación web. Este script contendrá el código para crear la interfaz gráfica con Streamlit y usar la aplicación.
+      * modelo.pth: Archivo del modelo entrenado que contiene los pesos de la red neuronal en formato PyTorch.
+      * README.md: Documento de descripción del proyecto que incluye instrucciones sobre cómo clonar el repositorio, instalar las dependencias y ejecutar la aplicación.
+      * requirements.txt: Archivo con las dependencias necesarias para ejecutar el proyecto.
+      * utils.py: Archivo con funciones auxiliares utilizadas por app.py, tales como preprocesamiento de datos y carga del modelo.
 
 
 
