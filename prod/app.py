@@ -183,7 +183,7 @@ if uploaded_file is not None:
             with st.spinner('Analyzing image...'):
                 # Load the model (ensure the path is correct relative to where app.py will run)
                 # Use the correct model filename
-                model_path = "modelo_resnet34.pth"
+                model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "modelo.pth")
                 num_classes = len(class_names) # Get the number of classes from utils
                 model = load_model(model_path, num_classes)
 
