@@ -6,6 +6,9 @@ import sys
 import os
 import time
 
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from utils import load_model, preprocess_image, predict_image, class_names, get_fruit_freshness_info, get_fruit_info_from_api
+
 # Configuración de la página
 st.set_page_config(
     page_title="FruitScan - Freshness Detector",
@@ -125,7 +128,7 @@ if uploaded_file is not None:
                 
                 # Cargar modelo (ajusta la ruta según tu estructura)
                 model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "prod", "modelo.pth")
-                num_classes = 6  # Número de clases en tu modelo
+                num_classes = len(class_names)  # Número de clases en tu modelo
                 model = load_model(model_path, num_classes)
                 
                 # Preprocesar y predecir
@@ -229,14 +232,7 @@ if uploaded_file is not None:
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
         st.info("Please try another image or contact support if the problem persists.")
-def load_model(model_path, num_classes):
-    """Loads the pre-trained ResNet model."""
-    model = models.resnet34(pretrained=False)
-    num_features = model.fc.in_features
-    model.fc = nn.Linear(num_features, num_classes)
-    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
-    model.eval()
-    return model
+
 # Footer
 st.markdown("---")
 st.markdown("""
